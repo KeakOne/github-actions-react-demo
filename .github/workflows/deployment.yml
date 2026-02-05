@@ -9,12 +9,15 @@ jobs:
       - name: install node.js
         uses: actions/setup-node@v3
         with:
+          # specifying a version cuts down on potential problems
           node-version: 18
       - name: install dependencies
         run: npm ci
       - name: run tests
         run: npm test
   deploy:
+    # needs = requirements for this job to run - makes things sequential
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: get code
